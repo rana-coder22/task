@@ -62,7 +62,7 @@ class Dashboard extends Template
             // Load product by SKU
             $product = $this->productFactory->create()->loadByAttribute('sku', $sku);
             if (!$product) {
-                return 'Image not found';  // Product not found for the given SKU
+                return 'Image not found. Please try again';  // Product not found for the given SKU
             }
             // Get the product image URL (thumbnail image)
             $url = $this->imageHelper->init($product, 'product_thumbnail_image')->getUrl();
