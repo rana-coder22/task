@@ -1,0 +1,22 @@
+{
+    "sales_order": {
+        "column": {
+            "custom_order_attribute": true
+        }
+    },
+    "sales_order_grid": {
+        "column": {
+            "custom_order_attribute": true
+        }
+    },
+    "quote": {
+        "column": {
+            "custom_order_attribute": true
+        }
+    },
+    "sales_invoice": {
+        "column": {
+            "custom_order_attribute": true
+        }
+    }
+}

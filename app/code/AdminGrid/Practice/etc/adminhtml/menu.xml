@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="AdminGrid_Practice::myadmingrid" title="My admin grid" module="AdminGrid_Practice" sortOrder="50" parent="Magento_Sales::sales" action="grid/index/index"
+             resource="AdminGrid_Practice::myadmingrid" />
+    </menu>
+</config>

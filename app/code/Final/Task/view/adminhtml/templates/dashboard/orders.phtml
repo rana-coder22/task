@@ -1,0 +1,81 @@
+<?php
+// Get orders based on SKU
+$orders = $block->getOrdersBySku();
+
+// Check if any orders were found
+if (empty($orders)) {
+    echo "No orders found for SKU: " . htmlspecialchars($block->getSku());
+} else {
+    echo "<h3>Orders containing SKU: " . htmlspecialchars($block->getSku()) . "</h3>";
+
+    // Start the HTML table
+    echo "<table class='admin-orders-table' border='1' cellpadding='10' cellspacing='0'>";
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th>Order ID</th>";
+    echo "<th>Customer Name</th>";
+    echo "<th>Status</th>";
+    echo "<th>Product Image</th>"; // Column for the product image
+    echo "<th>Action</th>"; // Optional: A column for action buttons like 'View Order'
+    echo "</tr>";
+    echo "</thead>";
+
+    echo "<tbody>";
+
+    // Loop through the orders and display each in a table row
+    foreach ($orders as $order) {
+        // Assuming the SKU is the same for all items in the order (you can refine if needed)
+        $sku = $block->getSku();
+        $imageUrl = $block->getProductImageUrl($sku); // Get product image URL
+
+        echo "<tr>";
+        echo "<td>" . htmlspecialchars($order->getIncrementId()) . "</td>";
+        echo "<td>" . htmlspecialchars($order->getCustomerName()) . "</td>";
+        echo "<td>" . htmlspecialchars($order->getStatus()) . "</td>";
+
+        // Display the product image in the table
+        echo "<td><img src='" . $imageUrl . "' alt='Product Image' width='100'></td>"; // Display image with 100px width
+
+        echo "<td><a href='" . $block->getUrl('sales/order/view', ['order_id' => $order->getId()]) . "'>View</a></td>"; // 'View' button for each order
+        echo "</tr>";
+    }
+
+    echo "</tbody>";
+    echo "</table>";
+}
+?>
+
+
+<style>
+    .admin-orders-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .admin-orders-table th, .admin-orders-table td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+    .admin-orders-table th {
+        background-color: #f4f4f4;
+        font-weight: bold;
+    }
+    .admin-orders-table td {
+        background-color: #fff;
+    }
+    .admin-orders-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    .admin-orders-table td img {
+        width: 100px; /* Set the size of the image */
+        height: auto;
+    }
+    .admin-orders-table td a {
+        color: #007bff;
+        text-decoration: none;
+    }
+    .admin-orders-table td a:hover {
+        text-decoration: underline;
+    }
+</style>

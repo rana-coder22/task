@@ -1,0 +1,21 @@
+<form action="<?php echo $block->getUrl('samplepost/index/submit'); ?>" method="post" enctype="multipart/form-data">
+    <label>Email:</label>
+    <input type="email" name="email" required /><br/><br/>
+
+    <label>Title:</label>
+    <input type="text" name="title" required /><br/><br/>
+
+    <label>Content:</label>
+    <textarea name="content" required></textarea><br/><br/>
+
+    <label>Start Date:</label>
+    <input type="datetime-local" name="start_date" /><br/><br/>
+
+    <label>End Date:</label>
+    <input type="datetime-local" name="end_date" /><br/><br/>
+
+    <label>Image:</label>
+    <input type="file" name="image" /><br/><br/>
+
+    <button type="submit">Submit</button>
+</form>

@@ -1,0 +1,60 @@
+<select id="email-dropdown">
+    <option value="">Select Email</option>
+    <?php foreach ($block->getEmails() as $email): ?>
+        <option value="<?php echo $email; ?>"><?php echo $email; ?></option>
+    <?php endforeach; ?>
+</select>
+<label for="start-date">Start Date:</label>
+<input type="date" id="start-date" />
+
+<label for="end-date">End Date:</label>
+<input type="date" id="end-date" />
+
+<div id="data-container">
+    <!-- Data will be appended here -->
+</div>
+
+<div id="result"></div>
+
+<script type="text/javascript">
+    require(['jquery', 'mage/url'], function($, urlBuilder) {
+        function loadPosts(pageNumber) {
+            var selectedValue = $('#email-dropdown').val();
+            var startDate = $('#start-date').val();
+            var endDate = $('#end-date').val();
+            var ajaxUrl = urlBuilder.build('show/ajax/index');
+
+            $.ajax({
+                url: ajaxUrl,
+                type: 'POST',
+                data: {
+                    selectedEmail: selectedValue,
+                    startDate: startDate,
+                    endDate: endDate,
+                    page: pageNumber // Pass the current page number
+                },
+                dataType: 'json',
+                success: function(response) {
+                    console.log(response);
+                    $('#data-container').html(response.result);
+                },
+                error: function() {
+                    $('#data-container').html('An error occurred.');
+                }
+            });
+        }
+
+        // Initial load
+        $('#email-dropdown, #start-date, #end-date').on('change', function() {
+            loadPosts(1); // Load first page when filters change
+        });
+
+        // Pagination click event
+        $(document).on('click', '.pagination-link', function(e) {
+            e.preventDefault();
+            var pageNumber = $(this).data('page'); // Get the page number from data attribute
+            loadPosts(pageNumber);
+        });
+    });
+
+</script>

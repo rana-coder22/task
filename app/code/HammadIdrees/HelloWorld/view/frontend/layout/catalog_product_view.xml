@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.info.stock.sku">
+            <block after="product.info.sku" class="HammadIdrees\HelloWorld\Block\Product\View\Attribute" name="restrictedcountries" cacheable="false" template="HammadIdrees_HelloWorld::restricted_countries.phtml"   />
+        </referenceContainer>
+    </body>
+</page>

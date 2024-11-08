@@ -1,0 +1,53 @@
+<?php
+$sku = ''; // Initially no SKU is set
+?>
+
+<div class="dashboard-container">
+    <h1 style="text-align: center">SKU-Based Order Management</h1>
+
+    <div style="display: flex; align-items: center; justify-content: center; margin-top: 20px;">
+        <label for="sku-input" style="margin-right: 10px;">Enter Product SKU:</label>
+        <input type="text" id="sku-input" name="sku" value="<?= $sku ?>" required style="padding: 10px; width: 200px; border: 1px solid #ccc; border-radius: 5px; margin-right: 10px;" />
+        <button id="search-order" type="submit" style="padding: 10px 20px; background-color: #FFA500; border: none; border-radius: 25px; color: white; cursor: pointer;">Search</button>
+    </div>
+</div>
+<br><hr><br>
+<div id="order-container">
+    <!-- Data will be appended here -->
+</div>
+
+<div id="result"></div>
+
+<script type="text/javascript">
+    require(['jquery', 'mage/url'], function($, urlBuilder) {
+
+         $(document).on('click', '#search-order', function(e) {
+            console.log('clicked')
+             var selectedValue = $('#sku-input').val();
+                console.log('sku'+ selectedValue)
+             $.ajax({
+                 url: '<?= $block->getUrl("skuorder/ajax/skuscan") ?>',
+                 type: 'POST',
+                 data: {
+                     sku : selectedValue,
+                 },
+                 dataType: 'json',
+                 success: function(response) {
+                     console.log('success')
+                     console.log(response);
+                     $('#order-container').html(response.result);
+
+                 },
+                 error: function() {
+                     console.log('error')
+                     $('#order-container').html('An error occurred.');
+
+                 }
+             });
+        });
+
+
+    });
+
+</script>
+

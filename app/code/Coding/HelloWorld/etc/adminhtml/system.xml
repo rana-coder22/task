@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="custom" translate="label" sortOrder="10">
+            <label> Custom </label>
+        </tab>
+        <section id="demo" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>class-separator</class>
+            <label>Demo Section</label>
+            <tab>custom</tab>
+            <resource>Custom_Configuration::demo_config</resource>
+            <group id="general" translate="label" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="enable" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="text" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Text</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/*/enable">1</field>
+                    </depends>
+                </field>
+                <field id="restrictions" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Restricted Emails</label>
+                    <source_model>Coding\HelloWorld\Model\Config\Source\EmailList</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="postlimit" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Post Limit</label>
+                    <source_model>Coding\HelloWorld\Model\Config\Source\EmailList</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

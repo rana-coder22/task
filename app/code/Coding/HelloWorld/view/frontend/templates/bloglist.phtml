@@ -1,0 +1,7 @@
+<?php
+$blogCollection = $block->getBlogs();
+
+foreach ($blogCollection as $blog) {
+    // Display the blog title as a clickable link
+    echo '<a href="' . $block->getBlogUrl($blog->getId()) . '">' . htmlspecialchars($blog->getTitle()) . '</a><br>';
+}

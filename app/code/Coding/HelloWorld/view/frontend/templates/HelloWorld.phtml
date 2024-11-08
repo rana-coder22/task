@@ -1,0 +1,30 @@
+<?php
+$blogCollection = $block->getHelloCollection(); // Fetch the collection of blogs
+
+// Ensure we are correctly iterating through the collection
+foreach ($blogCollection as $blog) {
+    // Display the title once
+    echo '<h2>' . htmlspecialchars($blog->getTitle()) . '</h2>'; // Display title as an <h2> heading
+
+    // Display the WYSIWYG content with HTML parsed correctly
+    echo $blog->getContent(); // Use the content directly, assuming it contains HTML
+
+    // Fetch the image filename from the blog object
+    $imageFileName = $blog->getImage(); // Assuming this returns the correct filename
+
+    // Display the image if it exists
+    if ($imageFileName) {
+        // Construct the full image URL assuming it's stored in 'pub/media/test/' directory
+        $imageUrl = $block->getBaseUrl() . 'pub/media/test/' . htmlspecialchars($imageFileName);
+        echo '<img src="' . $imageUrl . '" alt="' . htmlspecialchars($blog->getTitle()) . '" />'; // Display the image
+    } else {
+        echo '<p>No image available.</p>'; // Fallback if no image is found
+    }
+}
+
+// Display pagination if available
+if ($block->getPagerHtml()): ?>
+    <div class="order-products-toolbar toolbar bottom">
+        <?php echo $block->getPagerHtml(); ?>
+    </div>
+<?php endif; ?>

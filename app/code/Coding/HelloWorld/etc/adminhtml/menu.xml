@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <update id="Coding_HelloWorld::helloworld" title="Coding" module="Magento_Backend" sortOrder="177" resource="Coding_HelloWorld::helloworld"/>
+        <add id="Coding_HelloWorld::helloworldparent" title="Coding" module="Coding_HelloWorld" sortOrder="72"  parent="Coding_HelloWorld::helloworld" resource="Coding_HelloWorld::helloworldparent" />
+        <add id="Coding_HelloWorld::helloworld1" title="Manage Blog Post" module="Coding_HelloWorld" sortOrder="0" parent="Coding_HelloWorld::helloworldparent" action="helloworld/" resource="Coding_HelloWorld::helloworld1"/>
+    </menu>
+</config>

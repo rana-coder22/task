@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sales_order" resource="sales" engine="innodb" comment="Sales Order">
+        <column xsi:type="varchar" name="custom_order_attribute" nullable="true" length="255" comment="Custom Order Attribute"/>
+    </table>
+    <table name="sales_order_grid" resource="sales" engine="innodb" comment="Sales Order">
+        <column xsi:type="varchar" name="custom_order_attribute" nullable="true" length="255" comment="Custom Order Attribute"/>
+    </table>
+    <table name="quote" resource="checkout" engine="innodb" comment="Quote">
+        <column xsi:type="varchar" name="custom_order_attribute" nullable="true" length="255" comment="Custom Order Attribute"/>
+    </table>
+    <table name="sales_invoice" resource="sales" engine="innodb" comment="Sales Invoice">
+        <column xsi:type="varchar" name="custom_order_attribute" nullable="true" length="255" comment="Custom Order Attribute"/>
+    </table>
+
+    <table name="custom_form_data" resource="default" engine="innodb" comment="Custom Form Data">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity ID"/>
+        <column xsi:type="varchar" name="first_name" nullable="false" length="255" comment="First Name"/>
+        <column xsi:type="varchar" name="last_name" nullable="false" length="255" comment="Last Name"/>
+        <column xsi:type="varchar" name="email" nullable="false" length="255" comment="Email"/>
+        <column xsi:type="varchar" name="phone_number" nullable="false" length="20" comment="Phone Number"/>
+        <column xsi:type="varchar" name="image" nullable="true" length="255" comment="Image Path"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+</schema>

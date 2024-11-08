@@ -1,0 +1,18 @@
+<?php
+// Get the customer object
+$customer = $block->getCustomer();
+
+// Get the value of the custom discount attribute
+$customDiscount = $customer->getCustomAttribute('custom_discount');
+
+// Check if the attribute is set and format the output
+if ($customDiscount) {
+    $discountAllowed = $customDiscount->getValue() ? __('Yes') : __('No');
+} else {
+    $discountAllowed = __('Not Set'); // Fallback if the attribute is not found
+}
+?>
+
+<p>
+    <strong><?php echo __('Discount Allowed:'); ?></strong> <?php echo $block->escapeHtml($discountAllowed); ?><br>
+</p>

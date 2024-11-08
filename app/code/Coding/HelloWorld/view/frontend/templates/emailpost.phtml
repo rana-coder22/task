@@ -1,0 +1,15 @@
+<?php foreach ($block->getBlogs() as $blog): ?>
+    <div class="blog-post">
+        <p><strong>Post ID:</strong> <?php echo $blog['post_id']; ?></p>
+        <h2><?php echo $blog['title']; ?></h2>
+        <p><?php echo $blog['content']; ?></p>
+
+
+        <?php if (!empty($blog['image'])): ?>
+            <img src="<?=  $block->getUrl('media/test').$blog['image']; ?>" alt="img" width="100"/>
+        <?php else: ?>
+            <p>No image available.</p>
+        <?php endif; ?>
+
+    </div>
+<?php endforeach; ?>

@@ -1,0 +1,21 @@
+<?php
+$blog = $block->getBlog();
+
+if ($blog) {
+    echo '<h1>' . $blog->getTitle() . '</h1>'; // Display title
+    echo '<div>' . $blog->getContent() . '</div>'; // Display WYSIWYG content as raw HTML
+
+    // If your blog has an image, ensure that you have a column in the database storing the image path
+    $blogImage = $blog->getImage(); // Assuming this returns the correct filename
+
+    // Display the image if it exists
+    if ($blogImage) {
+        // Construct the full image URL assuming it's stored in 'pub/media/test/' directory
+        $imageUrl = $block->getBaseUrl() . 'pub/media/test/' . htmlspecialchars($blogImage);
+        echo '<img src="' . $imageUrl . '" alt="' . htmlspecialchars($blog->getTitle()) . '" />'; // Display the image
+    } else {
+        echo '<h1> Blog Date Expire. </h1>'; // Fallback if no image is found
+    }
+} else {
+    echo '<h1>Blog not found.</h1>';
+}

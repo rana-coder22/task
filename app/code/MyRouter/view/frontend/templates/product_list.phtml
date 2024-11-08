@@ -1,0 +1,26 @@
+<?php
+
+$block = $this->getLayout()->getBlock('product'); // Ensure 'product_list' matches the name used in layout XML
+$collection = $block->getProductCollection();
+?>
+
+<div class="products-list">
+    <?php if ($collection->getSize()): ?>
+        <ul>
+            <?php foreach ($collection as $product): ?>
+                <li>
+                    <h2><?php echo $product->getName(); ?></h2>
+                    <p><?php echo $product->getPrice(); ?></p>
+                    <p><?php echo $product->getShortDescription(); ?></p>
+                    <?php
+                    // Get the product image URL
+                    $imageUrl = $block->getProductImageUrl($product);
+                    ?>
+                    <img src="<?php echo $imageUrl; ?>" alt="<?php echo $product->getName(); ?>" />
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    <?php else: ?>
+        <p>No products found.</p>
+    <?php endif; ?>
+</div>

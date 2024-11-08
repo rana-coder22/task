@@ -1,0 +1,23 @@
+<?php
+$url = $block->getUrl('ajaxcall/index/ajaxcontroller');
+?>
+<div id="bodyContentMain">
+</div>
+<script type="text/javascript">
+    require(['jquery'], function($){
+        $(document).ready(function() {
+            setTimeout(function(){
+                $.ajax({
+                    context: '#bodyContentMain',
+                    url: '<?= $url ?>',
+                    type: "POST",
+                    data: {'newText':'Hello Everyone'},
+
+                }).done(function (data) {
+                    $('#bodyContentMain').html(data.result);
+                    return true;
+                });
+            },2000);
+        });
+    });
+</script>

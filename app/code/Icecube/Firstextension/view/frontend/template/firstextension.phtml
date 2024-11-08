@@ -1,0 +1,10 @@
+<!--<h1>-->
+<!--    --><?php
+//        echo $this->getFirstExtensionTxt();
+//    ?>
+<!--</h1>-->
+
+<?php
+    $block = $this->getLayout()->getBlock('Firstextension');
+    $post = $block->getFirstExtensionTxt();
+    echo $post;

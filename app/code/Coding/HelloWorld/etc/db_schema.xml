@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sample_posts" resource="default" engine="innodb" comment="Sample Post Table">
+        <column xsi:type="smallint" name="post_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Post ID"/>
+        <column xsi:type="varchar" name="email" nullable="false" length="255" comment="Post Email"/>
+        <column xsi:type="text" name="title" nullable="false" comment="Post Title"/>
+        <column xsi:type="text" name="content" nullable="false" comment="Post Content"/>
+        <column xsi:type="text" name="image" nullable="true" comment="Image"/>
+        <column xsi:type="datetime" name="start_date" nullable="true" comment="Start Date"/>
+        <column xsi:type="datetime" name="end_date" nullable="true" comment="End Date"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="post_id"/>
+        </constraint>
+    </table>
+
+</schema>
