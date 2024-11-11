@@ -6,76 +6,209 @@ $orders = $block->getOrdersBySku();
 if (empty($orders)) {
     echo "No orders found for SKU: " . htmlspecialchars($block->getSku());
 } else {
-    echo "<h3>Orders containing SKU: " . htmlspecialchars($block->getSku()) . "</h3>";
 
-    // Start the HTML table
-    echo "<table class='admin-orders-table' border='1' cellpadding='10' cellspacing='0'>";
-    echo "<thead>";
-    echo "<tr>";
-    echo "<th>Order ID</th>";
-    echo "<th>Customer Name</th>";
-    echo "<th>Status</th>";
-    echo "<th>Product Image</th>"; // Column for the product image
-    echo "<th>Action</th>"; // Optional: A column for action buttons like 'View Order'
-    echo "</tr>";
-    echo "</thead>";
+    // Start the layout for the left and right divs
+    echo "<div class='order-layout'>";
 
-    echo "<tbody>";
+    // Left div for Product Image and SKU
+    echo "<div class='left-div'>";
+    echo "<h4>Item Image and SKU</h4>";
+    $sku = $block->getSku();
+    $imageUrl = $block->getProductImageUrl($sku); // Get product image URL
 
-    // Loop through the orders and display each in a table row
+    echo "<div class='order-item'>";
+    // Inline style for the image to make it 150px and prevent blur
+    echo "<img src='" . $imageUrl . "' alt='Product Image' class='product-image'>";
+    echo "<p><strong>SKU:</strong> " . htmlspecialchars($sku) . "</p>";
+    echo "</div>";
+    echo "</div>"; // Close the left div
+
+    // Right div for Order Statuses and Quantities
+    echo "<div class='right-div'>";
+    echo "<h4>Order containing Product</h4>";
+
+    // Initialize counters for each status
+    $statusCount = [
+        'pending' => 0,
+        'processing' => 0,
+        'complete' => 0,
+    ];
+
+    // Loop through orders and count the statuses
     foreach ($orders as $order) {
-        // Assuming the SKU is the same for all items in the order (you can refine if needed)
-        $sku = $block->getSku();
-        $imageUrl = $block->getProductImageUrl($sku); // Get product image URL
-
-        echo "<tr>";
-        echo "<td>" . htmlspecialchars($order->getIncrementId()) . "</td>";
-        echo "<td>" . htmlspecialchars($order->getCustomerName()) . "</td>";
-        echo "<td>" . htmlspecialchars($order->getStatus()) . "</td>";
-
-        // Display the product image in the table
-        echo "<td><img src='" . $imageUrl . "' alt='Product Image' width='100'></td>"; // Display image with 100px width
-
-        echo "<td><a href='" . $block->getUrl('sales/order/view', ['order_id' => $order->getId()]) . "'>View</a></td>"; // 'View' button for each order
-        echo "</tr>";
+        $status = $order->getStatus();
+//        print_r($status);
+        $statusCount[$status] = ($statusCount[$status] ?? 0) + 1;
     }
 
-    echo "</tbody>";
-    echo "</table>";
+    // Display statuses with their quantities
+    echo "<div class='status-container'>";
+
+    // Pending status
+    echo "<div class='status-item' data-status='pending'>";
+    echo "<h5 class='status-title'>Pending</h5>";
+    echo "<p class='status-quantity'> " . $statusCount['pending'] . "</p>";
+    echo "</div>";
+
+    // Processing status
+    echo "<div class='status-item' data-status='processing'>";
+    echo "<h5 class='status-title'>Processing</h5>";
+    echo "<p class='status-quantity'> " . $statusCount['processing'] . "</p>";
+    echo "</div>";
+
+    // Completed status
+    echo "<div class='status-item' data-status='complete'>";
+    echo "<h5 class='status-title'>Complete</h5>";
+    echo "<p class='status-quantity'> " . $statusCount['complete'] . "</p>";
+    echo "</div>";
+
+    echo "</div>"; // Close the status container
+    echo "</div>"; // Close the right div
+
+    echo "</div>"; // Close the order layout di
 }
 ?>
+<br><br>
+<hr style="width:50%">
+<br>
+
+<div id="order-details-container">
+<!--    Data will be appended here-->
+</div>
+
 
 
 <style>
-    .admin-orders-table {
-        width: 100%;
-        border-collapse: collapse;
+    /* Layout container */
+    .order-layout {
+        display: flex;
+        justify-content: space-between;
         margin-top: 30px;
+        gap: 30px;
     }
-    .admin-orders-table th, .admin-orders-table td {
-        padding: 10px;
-        text-align: left;
-        border: 1px solid #ddd;
-    }
-    .admin-orders-table th {
-        background-color: #f4f4f4;
-        font-weight: bold;
-    }
-    .admin-orders-table td {
-        background-color: #fff;
-    }
-    .admin-orders-table tr:nth-child(even) {
+
+    /* Left section - Product image and SKU */
+    .left-div {
+        flex: 1;
         background-color: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        margin-left: 80px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
-    .admin-orders-table td img {
-        width: 100px; /* Set the size of the image */
-        height: auto;
+
+    .left-div h4 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: #333;
+        text-align: center;
     }
-    .admin-orders-table td a {
+
+    .order-item {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .product-image {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .left-div p {
+        font-size: 1rem;
+        color: #555;
+    }
+
+    /* Right section - Order status and quantities */
+    .right-div {
+        flex: 1;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        margin-right: 80px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .right-div h4 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #333;
+    }
+
+    .status-container {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .status-item {
+        text-align: center;
+        background-color: #f4f4f4;
+        padding: 15px;
+        border-radius: 8px;
+        width: 30%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .status-title {
+        font-size: 1.5rem;
         color: #007bff;
-        text-decoration: none;
+        margin-bottom: 10px;
     }
-    .admin-orders-table td a:hover {
-        text-decoration: underline;
+
+    .status-quantity {
+        font-size: 2.5rem;
+        color: #333;
+    }
+
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 768px) {
+        .order-layout {
+            flex-direction: column;
+        }
+
+        .status-container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .status-item {
+            width: 80%;
+            margin-bottom: 20px;
+        }
     }
 </style>
+
+<script type="text/javascript">
+    require(['jquery', 'mage/url'], function($, urlBuilder) {
+
+        $(document).on('click', '.status-item', function(e) {
+            console.log('clicked')
+            var status = $(this).data('status');
+            console.log('status' + status)
+            $.ajax({
+                url: '<?= $block->getUrl("skuorder/ajax/orderdetail") ?>',
+                type: 'POST',
+                data: {
+                    status : status
+                },
+                dataType: 'json',
+                success: function(response) {
+                    console.log('success')
+                    console.log(response);
+                    $('#order-details-container').html(response.response);
+
+                },
+                error: function() {
+                    console.log('error')
+                    $('#order-details-container').html('An error occurred.');
+
+                }
+            });
+        });
+    });
+
+</script>
